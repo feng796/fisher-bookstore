@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Fisher.Bookstore.Models
 {
@@ -13,6 +14,8 @@ namespace Fisher.Bookstore.Models
         public string ISBN { get; set; }
 
         public DateTime publicationDate { get; set; }
+
+        public string Publisher { get; set;}
 
     }
 }
