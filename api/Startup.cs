@@ -47,7 +47,7 @@ namespace Fisher.Bookstore.Api
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMvc(); 
         }
     }
 }
