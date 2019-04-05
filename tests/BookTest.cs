@@ -24,10 +24,14 @@ namespace tests
             };
 
             //Act
-            book.ChangePublicationDate(DateTime.Now.AddMonths(2));
+            var newPublicationDate = DateTime.Now.AddMonths(2);
+            book.ChangePublicationDate(newPublicationDate);
 
             //Assert
-            AssemblyLoadEventArgs.Equals(DateTime.Now.AddMonths(2), book.PublishDate);
+            var expectedPublicationDate = newPublicationDate.ToShortDateString();
+            var actualPublicationDate = book.PublishDate.ToShortDateString();
+
+            Assert.Equal(expectedPublicationDate, actualPublicationDate);
         }
     }
 }
