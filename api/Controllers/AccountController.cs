@@ -64,7 +64,7 @@ namespace Fisher.Bookstore.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] ApplicationUser login)
         {
-            var result = await signInManager.PasswordSignInAsync(login.Email,login.Password, isPersistent: false, lockoutOnFailure: false);
+            var result = await signInManger.PasswordSignInAsync(login.Email,login.Password, isPersistent: false, lockoutOnFailure: false);
             if (!result.Succeeded)
             {
                 return Unauthorized();

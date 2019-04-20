@@ -22,6 +22,7 @@ namespace Fisher.Bookstore.Api
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -36,6 +37,16 @@ namespace Fisher.Bookstore.Api
         options.UseNpgsql(Configuration.GetConnectionString("BookstoreContext")));
    
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+            });
+
             //add this for identity
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<BookstoreContext>()
@@ -43,12 +54,16 @@ namespace Fisher.Bookstore.Api
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            
+
             //AddIdentity
             services.AddAuthentication(option =>
             {
                 option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
+
+            
             .AddJwtBearer(jwtOptions =>
             {
                 jwtOptions.TokenValidationParameters = new TokenValidationParameters()
@@ -70,6 +85,7 @@ namespace Fisher.Bookstore.Api
             //add this for identity
             app.UseAuthentication();
             app.UseHttpsRedirection();
+            app.UseCors("CorsPolicy");
             app.UseMvc();
         }
     }
